@@ -2,7 +2,7 @@
 > And thanks for all the fish!
 
 ## Summary
-This project is about coding a minimal 2D game. [Minilibx](https://harm-smits.github.io/42docs/)https://harm-smits.github.io/42docs/ library used to open windows, putting pixels to the screen and listening keys.
+This project is about coding a minimal 2D game. [Minilibx](https://harm-smits.github.io/42docs/) library used to open windows, putting pixels to the screen and listening keys.
 
 ## Mandatory Part
 | Program Name    | Turn in files | Makefile | Arguments | External functs. | Libft authorized | Description |
