@@ -14,3 +14,8 @@ This project is about coding a minimal 2D game. [Minilibx](https://harm-smits.gi
 * All functions of the math library (-lm compiler option, man man 3 math)
 * All functions of the MiniLibX
 * ft_printf and any equivalent YOU coded
+
+## Compiling
+* Clone project with sub modules: `git clone --recursive git@github.com:hamza-cskn/42-so_long.git`
+* Go the project folder and build it: `cd 42-so_long/ && make`
+* Run the executable: `./solong`
