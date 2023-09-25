@@ -9,17 +9,16 @@ enum e_keys {
 	D = 2,
 };
 
-int key_hook(int keycode, t_vars *vars) {
-	printf("keycode: %d\n", keycode);
-	printf("mlx: %p\n", vars->mlx);
+int key_hook(int keycode, t_vars *vars)
+{
 	if (keycode == ESC)
 		close_window(vars);
 	else if (keycode == W)
-		safe_move(vars, 0, 1);
+		safe_move(vars, 0, -1);
 	else if (keycode == A)
 		safe_move(vars, -1, 0);
 	else if (keycode == S)
-		safe_move(vars, 0, -1);
+		safe_move(vars, 0, 1);
 	else if (keycode == D)
 		safe_move(vars, 1, 0);
 	return 0;
@@ -27,5 +26,6 @@ int key_hook(int keycode, t_vars *vars) {
 
 void init_controllers(t_vars *vars) {
 	mlx_hook(vars->win, 2, 1L<<0, key_hook, vars);
+	mlx_hook(vars->win, 17, 1L<<17, close_window, vars);
 }
 

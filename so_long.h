@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 15:20:14 by hcoskun           #+#    #+#             */
-/*   Updated: 2023/08/19 10:41:33 by hamza            ###   ########.fr       */
+/*   Updated: 2023/09/09 12:27:39 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef enum e_map_elements {
 	PLAYER = 'P',
 	EXIT = 'E',
 	COLLECTIBLE = 'C',
-}				t_map_elements;
+	VISITED = 'V'
+}				t_map_element;
 
 typedef struct s_position {
 	int	x;
@@ -40,19 +41,31 @@ typedef struct	s_data {
 typedef struct s_map {
 	int		width;
 	int		height;
-	t_map_elements	**map;
+	t_map_element	**map;
 }				t_map;
 
 typedef struct s_vars {
 	void	*mlx;
 	void	*win;
 	t_map	*map;
+	int 	moves;
 }				t_vars;
 
-void close_window(t_vars *vars);
+struct s_flood_data {
+	int left_collectible;
+	t_position current;
+	t_map map; // 1 = wall, 0 = empty, 2 = collectible, 3 = exit, (100 > n) = visited with n - 100 length path.
+	int status; //1 = found, 0 = continues, -1 abort.
+};
+
+int close_window(t_vars *vars);
+
+// Fill Flood
+
+struct s_flood_data flood_fill(struct s_flood_data data, unsigned int path_taken);
 
 // Validation
-t_map *is_rectangular(char *path);
+t_map *validate_map(char *path);
 
 // Map
 t_map *load_map(char *path);
@@ -86,7 +99,7 @@ t_data *prepare_image(void *mlx, int width, int height);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 // Preconditions
-void check_not_null(void *pointer, char *message);
+void *check_not_null(void *pointer, char *message);
 
 void check_is_not(int value, int not, char *message);
 

@@ -2,7 +2,7 @@ NAME	=	so_long
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
 LFLAGS	=	-Lget_next_line -Llibft -Lminilibx -lft -lmlx -framework OpenGL -framework AppKit
-SOURCES	=	so_long.c images.c controllers.c map.c visualizer.c validate.c preconditions.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+SOURCES	=	so_long.c images.c controllers.c map.c visualizer.c validate.c preconditions.c fill_flood.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 all		:	$(NAME)
 

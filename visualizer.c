@@ -3,7 +3,7 @@
 
 t_data *prepare_image(void *mlx, int width, int height) {
 	t_data	*img = (t_data *) malloc(sizeof(t_data));
-
+	check_not_null(img, "malloc allocation failed at prepare_image()");
 	img->img = mlx_new_image(mlx, width, height);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
 								  &img->endian);
@@ -24,11 +24,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 
 void update_square(t_vars *vars, int x, int y) {
-	t_map_elements element;
+	t_map_element element;
 	t_data *img;
 
 	element = vars->map->map[y][x];
-	printf("%c\n", element);
 	if (element == EMPTY)
 		img = get_grass_img(vars->mlx);
 	else if (element == PLAYER)
@@ -41,7 +40,7 @@ void update_square(t_vars *vars, int x, int y) {
 		img = get_collectible_img(vars->mlx);
 	else
 		return;
-	mlx_put_image_to_window(vars->mlx, vars->win, img->img, x * PIXEL_SIZE, (vars->map->height - y - 1) * PIXEL_SIZE);
+	mlx_put_image_to_window(vars->mlx, vars->win, img->img, x * PIXEL_SIZE, y * PIXEL_SIZE);
 	free(img);
 }
 
@@ -54,7 +53,6 @@ void	update_entire_map(t_vars *vars) {
 		x = 0;
 		while (x < vars->map->width) {
 			update_square(vars, x, y);
-			printf("x: %d\n", x);
 			x++;
 		}
 		y++;
