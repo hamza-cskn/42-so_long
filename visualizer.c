@@ -1,57 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visualizer.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/01 13:49:54 by hcoskun           #+#    #+#             */
+/*   Updated: 2023/10/01 17:02:32 by hcoskun          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
-#include <stdio.h>
+#include "minilibx/mlx.h"
 
-t_data *prepare_image(void *mlx, int width, int height) {
-	t_data	*img = (t_data *) malloc(sizeof(t_data));
-	check_not_null(img, "malloc allocation failed at prepare_image()");
-	img->img = mlx_new_image(mlx, width, height);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
-								  &img->endian);
-	check_not_null(img, "malloc allocation failed at prepare_image()");
-	return img;
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	update_square(t_vars *vars, int x, int y)
 {
-	char	*dst;
+	t_map_element	element;
+	void			*img;
+	int				size;
 
-	check_not_null(data, "data not found\n");
-	check_not_null(data->addr, "address not found\n");
-	check_is_not(data->line_length, 0, "line length cannot be zero\n");
-	check_is_not(data->bits_per_pixel, 0, "bits per pixel cannot be zero\n");
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-void update_square(t_vars *vars, int x, int y) {
-	t_map_element element;
-	t_data *img;
-
+	size = PIXEL_SIZE;
 	element = vars->map->map[y][x];
 	if (element == EMPTY)
-		img = get_grass_img(vars->mlx);
+		img = get_grass_img(vars, 0);
 	else if (element == PLAYER)
-		img = get_player_img(vars->mlx);
+		img = get_player_img(vars, 0);
 	else if (element == WALL)
-		img = get_wall_img(vars->mlx);
+		img = get_wall_img(vars, 0);
 	else if (element == EXIT)
-		img = get_exit_img(vars->mlx);
+		img = get_exit_img(vars, 0);
 	else if (element == COLLECTIBLE)
-		img = get_collectible_img(vars->mlx);
+		img = get_collectible_img(vars, 0);
 	else
-		return;
-	mlx_put_image_to_window(vars->mlx, vars->win, img->img, x * PIXEL_SIZE, y * PIXEL_SIZE);
-	free(img);
+		return ;
+	mlx_put_image_to_window(vars->mlx, vars->win,
+		get_grass_img(vars, 0), x * PIXEL_SIZE, y * PIXEL_SIZE);
+	mlx_put_image_to_window(vars->mlx, vars->win,
+		img, x * PIXEL_SIZE, y * PIXEL_SIZE);
 }
 
-void	update_entire_map(t_vars *vars) {
-	int x;
-	int y;
+void	update_entire_map(t_vars *vars)
+{
+	int	x;
+	int	y;
 
 	y = 0;
-	while (y < vars->map->height) {
+	while (y < vars->map->height)
+	{
 		x = 0;
-		while (x < vars->map->width) {
+		while (x < vars->map->width)
+		{
 			update_square(vars, x, y);
 			x++;
 		}

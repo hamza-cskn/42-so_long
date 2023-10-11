@@ -1,5 +1,18 @@
-# include "so_long.h"
-# include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controllers.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/01 14:22:54 by hcoskun           #+#    #+#             */
+/*   Updated: 2023/10/01 17:17:01 by hcoskun          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+#include <stdio.h>
+#include "minilibx/mlx.h"
 
 enum e_keys {
 	ESC = 53,
@@ -9,10 +22,10 @@ enum e_keys {
 	D = 2,
 };
 
-int key_hook(int keycode, t_vars *vars)
+int	key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == ESC)
-		close_window(vars);
+		close_window();
 	else if (keycode == W)
 		safe_move(vars, 0, -1);
 	else if (keycode == A)
@@ -21,11 +34,11 @@ int key_hook(int keycode, t_vars *vars)
 		safe_move(vars, 0, 1);
 	else if (keycode == D)
 		safe_move(vars, 1, 0);
-	return 0;
+	return (0);
 }
 
-void init_controllers(t_vars *vars) {
-	mlx_hook(vars->win, 2, 1L<<0, key_hook, vars);
-	mlx_hook(vars->win, 17, 1L<<17, close_window, vars);
+void	init_controllers(t_vars *vars)
+{
+	mlx_hook(vars->win, 2, 0, key_hook, vars);
+	mlx_hook(vars->win, 17, 0, close_window, vars);
 }
-

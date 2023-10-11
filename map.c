@@ -1,16 +1,30 @@
-# include "so_long.h"
-# include <stdio.h>
-# include <fcntl.h>
-# include "get_next_line/get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hcoskun <hcoskun@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/01 15:42:39 by hcoskun           #+#    #+#             */
+/*   Updated: 2023/10/01 18:03:13 by hcoskun          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_map *load_map(char *path) {
+#include "so_long.h"
+#include <stdlib.h>
+#include "libft/libft.h"
+#include <fcntl.h>
+#include "get_next_line/get_next_line.h"
+
+t_map	*load_map(char *path)
+{
 	t_map	*map;
 	int		y;
 	int		x;
-	int 	fd;
+	int		fd;
 	char	*line;
 
-	map = validate_map(path); //find height and width of maps
+	map = validate_map(path);
 	fd = open(path, O_RDONLY);
 	free(path);
 	map->map = malloc(sizeof(t_map_element *) * map->height);
@@ -18,20 +32,17 @@ t_map *load_map(char *path) {
 	y = 0;
 	while (y < map->height)
 	{
-		x = 0;
+		x = -1;
 		map->map[y] = malloc(sizeof(t_map_element) * map->width);
-		check_not_null(map->map[y], "memory allocation failed at load_map().maps[y]");
+		check_not_null(map->map[y], "memory allocation failed");
 		line = get_next_line(fd);
-		while (x < map->width)
-		{
+		while (++x < map->width)
 			map->map[y][x] = (t_map_element) line[x];
-			x++;
-		}
 		free(line);
 		y++;
 	}
 	close(fd);
-	return map;
+	return (map);
 }
 
 t_position	get_player_position(t_map *map)
@@ -54,7 +65,6 @@ t_position	get_player_position(t_map *map)
 	check_is_not(1, 1, "player not found in maps");
 	return ((t_position){.x = -1, .y = -1});
 }
-
 
 int	is_any_collectible_exist(t_map *map)
 {
@@ -91,8 +101,8 @@ void	safe_move(t_vars *vars, int dx, int dy)
 	{
 		if (is_any_collectible_exist(vars->map))
 			return ;
-		printf("You win!\n");
-		close_window(vars);
+		ft_putstr_fd("You win!\n", 1);
+		close_window();
 		return ;
 	}
 	vars->map->map[player.y][player.x] = EMPTY;
