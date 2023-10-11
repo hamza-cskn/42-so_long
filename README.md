@@ -15,7 +15,10 @@ This project is about coding a minimal 2D game. [Minilibx](https://harm-smits.gi
 * All functions of the MiniLibX
 * ft_printf and any equivalent YOU coded
 
+## Image
+<img width="1090" alt="Ekran Resmi 2023-10-11 ÖS 3 22 48" src="https://github.com/hamza-cskn/42-so_long/assets/36128276/4e591b8b-bf90-4971-bab6-b335284cc525">
+
 ## Compiling
 * Clone project with sub modules: `git clone --recursive git@github.com:hamza-cskn/42-so_long.git`
 * Go the project folder and build it: `cd 42-so_long/ && make`
-* Run the executable: `./solong`
+* Run the executable: `./so_long`
