@@ -21,11 +21,11 @@ This project is about coding a minimal 2D game. [Minilibx](https://harm-smits.gi
 ## Map
 Maps can be added or edited. The game will read the maps folder. Please feel free to look over example maps in the repository. Each character (except newlines) in the map file represents a square in the game.
 
-P -> Player
-1 -> WALL
-0 -> EMPTY (I call them GRASS)
-C -> COLLECTIBLE (Strawberries)
-E -> EXIT
+* P -> Player
+* 1 -> WALL
+* 0 -> EMPTY (I call them GRASS)
+* C -> COLLECTIBLE (Strawberries)
+* E -> EXIT
 
 All maps must meet these requirements to be valid and playable.
 1. Must be rectangular.
